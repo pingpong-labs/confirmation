@@ -13,7 +13,7 @@ trait Confirmable
     {
         return route('confirmation.confirm', $this->confirmation_code);
     }
-    
+
     /**
      * Confirm current user.
      * 
@@ -30,6 +30,7 @@ trait Confirmable
      * 'confirmed' query scope.
      * 
      * @param  \Illuminate\Database\Eloquent\Builder
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeOnlyConfirmed($query)
@@ -41,6 +42,7 @@ trait Confirmable
      * 'unconfirmed' query scope.
      * 
      * @param  \Illuminate\Database\Eloquent\Builder
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeOnlyUnconfirmed($query)
@@ -51,7 +53,7 @@ trait Confirmable
     /**
      * Determine whether the current user is confirmed.
      * 
-     * @return boolean
+     * @return bool
      */
     public function confirmed()
     {
@@ -61,10 +63,10 @@ trait Confirmable
     /**
      * Determine whether the current user is not confirmed.
      * 
-     * @return boolean
+     * @return bool
      */
     public function unconfirmed()
     {
-        return ! $this->confirmed();
+        return !$this->confirmed();
     }
 }

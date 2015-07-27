@@ -18,7 +18,6 @@ class Confirmator implements Contracts\Confirmator
      * Create new instance of confirmator class.
      * 
      * @param Mailer $mailer
-     * @return void
      */
     public function __construct(Mailer $mailer)
     {
@@ -28,7 +27,8 @@ class Confirmator implements Contracts\Confirmator
     /**
      * Get user by given confirmation code.
      * 
-     * @param  string $code
+     * @param string $code
+     *
      * @return \App\User
      */
     public function getUserByCode($code)
@@ -41,13 +41,14 @@ class Confirmator implements Contracts\Confirmator
     /**
      * Confirm specific user by given confirmation code.
      * 
-     * @param  string $code
+     * @param string $code
+     *
      * @return \App\User
      */
     public function confirm($code)
     {
         $user = $this->getUserByCode($code);
-        
+
         $user->confirm();
 
         return $user;
@@ -56,7 +57,8 @@ class Confirmator implements Contracts\Confirmator
     /**
      * Get user instance by email address.
      * 
-     * @param  string $email
+     * @param string $email
+     *
      * @return \App\User
      */
     public function getUserByEmail($email)
@@ -68,6 +70,7 @@ class Confirmator implements Contracts\Confirmator
      * Send confirmation email.
      * 
      * @param  string email
+     *
      * @return mixed
      */
     public function send($email)

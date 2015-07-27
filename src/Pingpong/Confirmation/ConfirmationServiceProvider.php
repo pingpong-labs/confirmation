@@ -8,15 +8,13 @@ class ConfirmationServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
     public function boot()
     {
         $configPath = config_path('confirmation.php');
 
         $this->publishes([
-            __DIR__.'/../../config/config.php' => $configPath
+            __DIR__.'/../../config/config.php' => $configPath,
         ], 'config');
 
         if (file_exists($configPath)) {
@@ -24,14 +22,12 @@ class ConfirmationServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__.'/../../migrations' => base_path('database/migrations')
+            __DIR__.'/../../migrations' => base_path('database/migrations'),
         ], 'migration');
     }
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register()
     {
