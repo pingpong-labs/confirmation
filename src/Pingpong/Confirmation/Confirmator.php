@@ -80,7 +80,7 @@ class Confirmator implements Contracts\Confirmator
         $user->confirmation_code = $this->getCode();
         $user->save();
 
-        return $this->mailer->send('emails.confirmation', compact('user'),
+        return $this->mailer->send('confirmation::email', compact('user'),
             function ($m) use ($email) {
             $m->from($this->getSenderEmail(), $this->getSenderName())
               ->subject($this->getSubject())
@@ -106,7 +106,7 @@ class Confirmator implements Contracts\Confirmator
      */
     protected function getSenderEmail()
     {
-        return config('mail.from.email');
+        return config('mail.from.address');
     }
 
     /**
