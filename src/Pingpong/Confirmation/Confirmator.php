@@ -124,7 +124,7 @@ class Confirmator implements Contracts\Confirmator
      * 
      * @return string
      */
-    protected function getCode()
+    public function getCode()
     {
         return sha1(time());
     }

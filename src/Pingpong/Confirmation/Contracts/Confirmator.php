@@ -41,6 +41,6 @@ interface Confirmator {
      * 
      * @return string
      */
-    protected function getCode();
+    public function getCode();
 
 }
