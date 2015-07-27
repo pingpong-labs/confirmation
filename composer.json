@@ -1,0 +1,27 @@
+{
+    "name": "pingpong/confirmation",
+    "description": "Laravel 5 Confirmation",
+    "license": "BS3-Clause",
+    "authors": [
+        {
+            "name": "Pingpong Labs",
+            "email": "pingpong.labs@gmail.com"
+        },
+        {
+            "name": "Gravitano",
+            "email": "gravitano16@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "illuminate/contracts": "~5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pingpong\\Confirmation\\": "src/Pingpong/Confirmation"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.7"
+    }
+}
