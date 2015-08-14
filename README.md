@@ -13,3 +13,7 @@ Publish the package's config and migrations by running `php artisan vendor:publi
 ## Documentation
 
 Coming Soon
+
+## License
+
+This package is open-sourced under BSD-3-Clause license.
