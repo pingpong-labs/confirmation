@@ -80,13 +80,23 @@ class Confirmator implements Contracts\Confirmator
         $user->confirmation_code = $this->getCode();
         $user->save();
 
-        return $this->mailer->send('confirmation::email', compact('user'),
+        return $this->mailer->send($this->getView(), compact('user'),
             function ($m) use ($email) {
             $m->from($this->getSenderEmail(), $this->getSenderName())
               ->subject($this->getSubject())
               ->to($email)
             ;
         });
+    }
+
+    /**
+     * Get view name.
+     * 
+     * @return string
+     */
+    public function getView()
+    {
+        return 'confirmation::email';
     }
 
     /**
