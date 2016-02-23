@@ -29,7 +29,7 @@ class ConfirmationServiceProvider extends ServiceProvider
         
         $viewSourcePath = __DIR__.'/../../views';
 
-        $this->publishes([$viewSourcePath, $viewsPath]);
+        $this->publishes([$viewSourcePath => $viewsPath]);
 
         $this->loadViewsFrom([$viewsPath, $viewSourcePath], 'confirmation');
     }
