@@ -57,7 +57,7 @@ trait Confirmable
      */
     public function confirmed()
     {
-        return is_null($this->confirmation_code) || intval($this->confirmed) == 1;
+        return is_null($this->confirmation_code) && intval($this->confirmed) == 1;
     }
 
     /**
