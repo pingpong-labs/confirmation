@@ -4,6 +4,7 @@ namespace Pingpong\Confirmation;
 
 use App\User;
 use Illuminate\Contracts\Mail\Mailer;
+use Pingpong\Confirmation\EmailAlreadyConfirmedException;
 
 class Confirmator implements Contracts\Confirmator
 {
@@ -76,6 +77,10 @@ class Confirmator implements Contracts\Confirmator
     public function send($email)
     {
         $user = $this->getUserByEmail($email);
+
+        if ($user->confirmed()) {
+            throw new EmailAlreadyConfirmedException("This email has already confirmed.");
+        }
 
         $user->confirmation_code = $this->getCode();
         $user->save();
