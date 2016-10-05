@@ -22,6 +22,7 @@ class Confirmator implements Contracts\Confirmator
      */
     public function __construct(Mailer $mailer)
     {
+        $this->user = app(config('auth.providers.users.model'));
         $this->mailer = $mailer;
     }
 
@@ -34,7 +35,7 @@ class Confirmator implements Contracts\Confirmator
      */
     public function getUserByCode($code)
     {
-        return User::whereConfirmationCode($code)
+        return $this->user->whereConfirmationCode($code)
             ->whereConfirmed(false)
             ->firstOrFail();
     }
@@ -64,7 +65,7 @@ class Confirmator implements Contracts\Confirmator
      */
     public function getUserByEmail($email)
     {
-        return User::whereEmail($email)->firstOrFail();
+        return $this->user->whereEmail($email)->firstOrFail();
     }
 
     /**
