@@ -14,6 +14,7 @@ class Confirmator implements Contracts\Confirmator
      * @var \Illuminate\Contracts\Mail\Mailer
      */
     protected $mailer;
+    protected $user;
 
     /**
      * Create new instance of confirmator class.
@@ -29,15 +30,17 @@ class Confirmator implements Contracts\Confirmator
     /**
      * Get user by given confirmation code.
      * 
-     * @param string $code
+     * @param string $token
      *
      * @return \App\User
      */
-    public function getUserByCode($code)
+    public function getUserByCode($token)
     {
-        return $this->user->whereConfirmationCode($code)
-            ->whereConfirmed(false)
-            ->firstOrFail();
+        $user_id = \DB::table('unconfirmed_emails')
+            ->whereConfirmationToken($token)
+            ->value('user_id');
+        
+        return $this->user->findOrFail($user_id);
     }
 
     /**
@@ -49,11 +52,9 @@ class Confirmator implements Contracts\Confirmator
      */
     public function confirm($code)
     {
-        $user = $this->getUserByCode($code);
+        $user = app(config('auth.providers.users.model'));
 
-        $user->confirm();
-
-        return $user;
+        return $user->confirm($code);
     }
 
     /**
@@ -65,7 +66,12 @@ class Confirmator implements Contracts\Confirmator
      */
     public function getUserByEmail($email)
     {
-        return $this->user->whereEmail($email)->firstOrFail();
+        $user_id = \DB::table('unconfirmed_emails')
+            ->whereEmail($email)
+            ->value('user_id');
+
+        return $this->user->find($user_id);
+
     }
 
     /**
@@ -77,14 +83,12 @@ class Confirmator implements Contracts\Confirmator
      */
     public function send($email)
     {
-        $user = $this->getUserByEmail($email);
-
-        if ($user->confirmed()) {
+        $verifiedEmail = (bool)$this->user->where('email',$email)->first(['email']);
+        if ($verifiedEmail) {
             throw new EmailAlreadyConfirmedException("This email has already confirmed.");
         }
 
-        $user->confirmation_code = $this->getCode();
-        $user->save();
+        $user = $this->getUserByEmail($email);
 
         return $this->mailer->send($this->getView(), compact('user'),
             function ($m) use ($email) {
@@ -142,6 +146,6 @@ class Confirmator implements Contracts\Confirmator
      */
     public function getCode()
     {
-        return sha1(time());
+        return str_random(16);
     }
 }
