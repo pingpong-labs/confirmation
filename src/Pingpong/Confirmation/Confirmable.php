@@ -38,8 +38,8 @@ trait Confirmable
      */
     public function getEmailAttribute()
     {
-        if ($this->email !== null) {
-            return $this->email;
+        if ( $this->attributes['email'] !== null) {
+            return  $this->attributes['email'];
         }
 
         return $unconfirmed_mail = \DB::table('unconfirmed_emails')->where('user_id', $this->id)->value('email');
@@ -88,7 +88,7 @@ trait Confirmable
      */
     public function confirmed()
     {
-        return !is_null($this->email);
+        return !is_null $this->attributes['email']);
     }
 
     /**
